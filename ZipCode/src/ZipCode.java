@@ -32,4 +32,8 @@ public class ZipCode {
 		return State;
 	}
 
+	public String toString() {
+		return "ZipCode: " + ZipCode + "\tCity: " + City;
+	}
+
 }

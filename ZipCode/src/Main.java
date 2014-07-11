@@ -1,16 +1,14 @@
 import java.io.*;
 import java.util.*;
 
-import javax.swing.JFrame;
-
 public class Main {
 	static ArrayList<ZipCode> arrayOfZipCode;
-	static PixelCanvas convas;
+	static ZipCodeCollection collection;
 
 	public static void main(String[] args) {
-		initialize(arrayOfZipCode);
-		createGUI(convas);
-		convas.drawPoint(convas.getGraphics(), 100, 150, 200, 250);
+		arrayOfZipCode = initialize();
+		collection = new ZipCodeCollection(arrayOfZipCode);
+		interactive();
 	}
 
 	public static void readText(ArrayList<String> array) {
@@ -54,22 +52,27 @@ public class Main {
 
 	}
 
-	public static void initialize(ArrayList<ZipCode> array) {
+	public static ArrayList<ZipCode> initialize() {
 		ArrayList<String> arrayOfString = new ArrayList<String>();
+		ArrayList<ZipCode> arrayOfZipCode = new ArrayList<ZipCode>();
 		readText(arrayOfString);
 		checkArray(arrayOfString);
-		ArrayList<ZipCode> arrayOfZipCode = new ArrayList<ZipCode>();
 		processArray(arrayOfString, arrayOfZipCode);
-		array = arrayOfZipCode;
+		return arrayOfZipCode;
 	}
 
-	public static void createGUI(PixelCanvas convas) {
-		PixelCanvas p = new PixelCanvas();
-		JFrame frame = new JFrame();
-		frame.setSize(PixelCanvas.WIDTH, PixelCanvas.HEIGHT);
-		frame.add(p);
-		frame.setVisible(true);
-		convas = p;
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public static void interactive() {
+		Scanner stdin = new Scanner(System.in);
+		int i1, i2;
+		System.out.print("Enter ZipCode: ");
+		i1 = stdin.nextInt();
+		System.out.print("Enter Radius in meter: ");
+		i2 = stdin.nextInt();
+
+		ZipCodeCollection temp = new ZipCodeCollection(new ArrayList<ZipCode>());
+
+		collection.getCollectionOfZipCodeByMiles(temp,
+				collection.getByZipCode(i1), i2);
+		System.out.println("Result:\n" + temp.toString());
 	}
 }
