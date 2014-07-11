@@ -1,13 +1,16 @@
 import java.io.*;
 import java.util.*;
 
+import javax.swing.JFrame;
+
 public class Main {
+	static ArrayList<ZipCode> arrayOfZipCode;
+	static PixelCanvas convas;
+
 	public static void main(String[] args) {
-		ArrayList<String> arrayOfString = new ArrayList<String>();
-		readText(arrayOfString);
-		checkArray(arrayOfString);
-		ArrayList<ZipCode> arrayOfZipCode = new ArrayList<ZipCode>();
-		processArray(arrayOfString, arrayOfZipCode);
+		initialize(arrayOfZipCode);
+		createGUI(convas);
+		convas.drawPoint(convas.getGraphics(), 100, 150, 200, 250);
 	}
 
 	public static void readText(ArrayList<String> array) {
@@ -49,5 +52,24 @@ public class Main {
 					str[4]));
 		}
 
+	}
+
+	public static void initialize(ArrayList<ZipCode> array) {
+		ArrayList<String> arrayOfString = new ArrayList<String>();
+		readText(arrayOfString);
+		checkArray(arrayOfString);
+		ArrayList<ZipCode> arrayOfZipCode = new ArrayList<ZipCode>();
+		processArray(arrayOfString, arrayOfZipCode);
+		array = arrayOfZipCode;
+	}
+
+	public static void createGUI(PixelCanvas convas) {
+		PixelCanvas p = new PixelCanvas();
+		JFrame frame = new JFrame();
+		frame.setSize(PixelCanvas.WIDTH, PixelCanvas.HEIGHT);
+		frame.add(p);
+		frame.setVisible(true);
+		convas = p;
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
